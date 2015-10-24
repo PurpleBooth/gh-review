@@ -15,3 +15,11 @@ script:
   - bin/gh-review PredictTheSky
   - docker run gh-review -h
   - docker run -i gh-review PredictTheSky
+
+notifications:
+  webhooks:
+    urls:
+      - https://webhooks.gitter.im/e/6c8c5ee8b6eb5057f556
+    on_success: change  # options: [always|never|change] default: always
+    on_failure: always  # options: [always|never|change] default: always
+    on_start: never     # options: [always|never|change] default: always
