@@ -1,6 +1,6 @@
 # GH Review 
 
-[![Build Status](https://travis-ci.org/PurpleBooth/gh-review.svg?branch=master)](https://travis-ci.org/PurpleBooth/gh-review)
+[![Build Status](https://travis-ci.org/PurpleBooth/gh-review.svg?branch=master)](https://travis-ci.org/PurpleBooth/gh-review) [![Docker Repository on Quay.io](https://quay.io/repository/purplebooth/gh-review/status "Docker Repository on Quay.io")](https://quay.io/repository/purplebooth/gh-review)
 
 Review the status of an organisations public github account and score it based on documents present (like READMEs)
 
@@ -31,6 +31,24 @@ We don't currently have any. This was a hacky morning project, quality is potato
 
 ```shell
 $ bin/gh-review -h
+
+  Usage: gh-review [options] <organisationName>
+
+  Review the status of an organisations public github account and score it based on documents present (like READMEs)
+
+  Options:
+
+    -h, --help                 output usage information
+    -V, --version              output the version number
+    -u, --username <username>  GitHub Username (Optional)
+    -p, --password <password>  GitHub Password (Optional)
+    -o, --oauth <oauth>        OAuth2 token to authenticate with (Optional)
+```
+
+or via docker (without installing anything)
+
+```shell
+$ docker run purplebooth/gh-review:$VERSION
 
   Usage: gh-review [options] <organisationName>
 

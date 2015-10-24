@@ -6,6 +6,10 @@ node_js:
 sudo: required
 dist: trusty
 
+service:
+  - docker
+
 script: 
   - bin/gh-review -h
   - bin/gh-review twitter
+  - docker build .
