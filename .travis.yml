@@ -14,4 +14,4 @@ script:
   - bin/gh-review -h
   - bin/gh-review PredictTheSky
   - docker run gh-review -h
-  - docker run -it gh-review PredictTheSky
+  - docker run -i gh-review PredictTheSky

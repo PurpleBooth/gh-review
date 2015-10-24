@@ -3,6 +3,7 @@ FROM node:4.2.1
 COPY . /usr/src/gh-review
 
 WORKDIR /usr/src/gh-review
-RUN npm install
+RUN rm -rf node_modules ; npm install
 
-ENTRYPOINT bin/gh-review
+ENTRYPOINT ["node", "gh-review.js"]
+CMD []
