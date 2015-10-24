@@ -1,5 +1,7 @@
 # GH Review 
 
+[![Build Status](https://travis-ci.org/PurpleBooth/gh-review.svg?branch=master)](https://travis-ci.org/PurpleBooth/gh-review)
+
 Review the status of an organisations public github account and score it based on documents present (like READMEs)
 
 ## Getting Started

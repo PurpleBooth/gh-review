@@ -1,0 +1,11 @@
+language: node_js
+node_js:
+  - "4.1"
+  - "4.0"
+
+sudo: required
+dist: trusty
+
+script: 
+  - bin/gh-review -h
+  - bin/gh-review twitter
