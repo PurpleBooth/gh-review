@@ -13,6 +13,8 @@ var Github = require('github-api');
 var Table = require('cli-table');
 var Git = require("nodegit");
 
+// something something something
+
 program
     .version('0.1.0')
     .arguments('<organisationName>')
@@ -26,6 +28,7 @@ if ((!program.username && program.password) || (program.username && !program.pas
     program.help();
 }
 
+// 34rawrfaergaerg
 
 var auth = {};
 
@@ -43,6 +46,8 @@ if (program.username && program.password) {
         auth: "basic"
     };
 }
+
+// ergargatgbea
 
 var github = new Github(auth);
 var user = github.getUser();
