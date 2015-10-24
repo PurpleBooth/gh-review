@@ -1,0 +1,23 @@
+{
+  "name": "gh-review",
+  "version": "0.1.0",
+  "description": "Quickly review the state of an organisation's public github. Check for the presence of README's, Travis Builds (and if master is stable), CONTRIBUTING and LICENSE files.",
+  "main": "run.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Billie Thompson <billie@purplebooth.co.uk>",
+  "license": "GPL-2.0",
+  "dependencies": {
+    "async": "^1.4.2",
+    "cli-table": "^0.3.1",
+    "colors": "^1.1.2",
+    "commander": "^2.9.0",
+    "fs-extra": "^0.24.0",
+    "github-api": "^0.10.6",
+    "glob": "^5.0.15",
+    "line-count": "^0.1.0",
+    "nodegit": "^0.5.0",
+    "underscore": "^1.8.3"
+  }
+}
