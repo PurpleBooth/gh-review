@@ -19,5 +19,9 @@
     "line-count": "^0.1.0",
     "nodegit": "^0.5.0",
     "underscore": "^1.8.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:PurpleBooth/gh-review.git"
   }
 }

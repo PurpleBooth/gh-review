@@ -10,6 +10,8 @@ service:
   - docker
 
 script: 
+  - docker build -t gh-review .
   - bin/gh-review -h
-  - bin/gh-review twitter
-  - docker build .
+  - bin/gh-review PredictTheSky
+  - docker run gh-review -h
+  - docker run -it gh-review PredictTheSky

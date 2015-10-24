@@ -1,6 +1,6 @@
 # GH Review 
 
-[![Build Status](https://travis-ci.org/PurpleBooth/gh-review.svg?branch=master)](https://travis-ci.org/PurpleBooth/gh-review) [![Docker Repository on Quay.io](https://quay.io/repository/purplebooth/gh-review/status "Docker Repository on Quay.io")](https://quay.io/repository/purplebooth/gh-review)
+[![Build Status](https://travis-ci.org/PurpleBooth/gh-review.svg?branch=master)](https://travis-ci.org/PurpleBooth/gh-review) [![Docker Repository on Quay.io](https://quay.io/repository/purplebooth/gh-review/status "Docker Repository on Quay.io")](https://quay.io/repository/purplebooth/gh-review) [![GitHub version](https://badge.fury.io/gh/PurpleBooth%2Fgh-review.svg)](https://badge.fury.io/gh/PurpleBooth%2Fgh-review)
 
 Review the status of an organisations public github account and score it based on documents present (like READMEs)
 
