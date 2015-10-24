@@ -4,48 +4,9 @@
 
 Review the status of an organisations public github account and score it based on documents present (like READMEs)
 
-## Getting Started
-
-These instructions will get you up and running with the review tool.
-
-### Prerequisities
-
-Make sure you have the latest version of [NodeJS](https://nodejs.org/en/).
-
-### Installing
-
-Download this repository, then install the dependencies using npm.
-
-```
-npm install
-```
-
-Then you are ready to go.
-
-## Running the tests
-
-We don't currently have any. This was a hacky morning project, quality is potato level.
-
-
 ## Usage
 
-```shell
-$ bin/gh-review -h
-
-  Usage: gh-review [options] <organisationName>
-
-  Review the status of an organisations public github account and score it based on documents present (like READMEs)
-
-  Options:
-
-    -h, --help                 output usage information
-    -V, --version              output the version number
-    -u, --username <username>  GitHub Username (Optional)
-    -p, --password <password>  GitHub Password (Optional)
-    -o, --oauth <oauth>        OAuth2 token to authenticate with (Optional)
-```
-
-or via docker (without installing anything)
+You can use this tool via Docker without installing anything other than docker itself.
 
 ```shell
 $ docker run -i quay.io/purplebooth/gh-review:$VERSION
@@ -62,6 +23,27 @@ $ docker run -i quay.io/purplebooth/gh-review:$VERSION
     -p, --password <password>  GitHub Password (Optional)
     -o, --oauth <oauth>        OAuth2 token to authenticate with (Optional)
 ```
+
+You can also checkout or download a release and run it manually. Please see the [installing](#installing) section for 
+the preparation needed to get it working outside the container.
+
+```shell
+$ docker run -i quay.io/purplebooth/gh-review:$VERSION
+
+  Usage: gh-review [options] <organisationName>
+
+  Review the status of an organisations public github account and score it based on documents present (like READMEs)
+
+  Options:
+
+    -h, --help                 output usage information
+    -V, --version              output the version number
+    -u, --username <username>  GitHub Username (Optional)
+    -p, --password <password>  GitHub Password (Optional)
+    -o, --oauth <oauth>        OAuth2 token to authenticate with (Optional)
+```
+
+You can include private repos, or bypass rate limiting by providing a username and password or a oauth token.
 
 ## Example Output
 
@@ -137,6 +119,23 @@ Calculating scores
 │ twitter/zktraffic                      │ public  │ ✓      │ ✓       │ ✓            │ ✓      │ 4     │
 └────────────────────────────────────────┴─────────┴────────┴─────────┴──────────────┴────────┴───────┘
 ```
+
+### Installing
+
+Make sure you have the latest version of [NodeJS](https://nodejs.org/en/).
+
+First checkout this repository, or download the release, and run
+
+```
+npm install
+```
+
+Once this is complete the application can be run from `bin/gh-review`
+
+## Running the tests
+
+We don't currently have any. This was a hacky morning project, quality is potato level. There is a travis build that 
+"tests" the application by running it.
 
 ## Contributing
 
