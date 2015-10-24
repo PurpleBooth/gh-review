@@ -120,7 +120,7 @@ Calculating scores
 └────────────────────────────────────────┴─────────┴────────┴─────────┴──────────────┴────────┴───────┘
 ```
 
-### Installing
+## Installing
 
 Make sure you have the latest version of [NodeJS](https://nodejs.org/en/).
 
