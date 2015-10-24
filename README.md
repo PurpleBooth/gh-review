@@ -28,7 +28,7 @@ You can also checkout or download a release and run it manually. Please see the 
 the preparation needed to get it working outside the container.
 
 ```shell
-$ docker run -i quay.io/purplebooth/gh-review:$VERSION
+$ bin/gh-review
 
   Usage: gh-review [options] <organisationName>
 
@@ -48,7 +48,7 @@ You can include private repos, or bypass rate limiting by providing a username a
 ## Example Output
 
 ```shell
-./gh-review twitter
+bin/gh-review twitter
 Requesting Repos for: twitter
 Checking out: twitter/kestrel
 <..snip..>
