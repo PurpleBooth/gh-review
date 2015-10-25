@@ -14,6 +14,8 @@ var GitHubApi = require("github");
 var Table = require('cli-table');
 var Git = require("nodegit");
 
+var ASYNC_LIMIT = 10
+
 program
     .version('0.1.0')
     .arguments('<organisationName>')
@@ -81,7 +83,7 @@ user.orgRepos(orgname, function (er, repos) {
         process.exit(1);
     }
 
-    async.filter(repos, function (repo, callback) {
+    async.filterLimit(repos, ASYNC_LIMIT, function (repo, callback) {
         if (program.publicOnly && repo.private) {
             callback(false)
 
@@ -90,7 +92,7 @@ user.orgRepos(orgname, function (er, repos) {
         }
     }, function (repos) {
 
-        async.forEachOf(repos, function (repo, key, callback) {
+        async.forEachOfLimit(repos, ASYNC_LIMIT, function (repo, key, callback) {
             console.log("Checking out: " + repo.full_name);
 
             var repoLocation = tmpDirectory + "/" + repo.id;
@@ -120,13 +122,13 @@ user.orgRepos(orgname, function (er, repos) {
 
             cloneRepository.catch(console.log.bind(console)).then(function (repository) {
                 console.log("Analysing: " + repo.full_name);
-                async.parallel({
+                async.parallelLimit({
                     readme: function (callback) {
                         glob("README*", {cwd: repoLocation}, function (er, files) {
                             // GH Generates a tiny readme for you. Most readmes are greater than 10 lines.
                             // Lets check for that
                             if (files.length > 0) {
-                                async.any(files, function (file, callback) {
+                                async.someLimit(files, ASYNC_LIMIT, function (file, callback) {
                                     var fileContents = fs.readFileSync(repoLocation + "/" + file, {encoding: 'utf8'});
 
                                     if (!fileContents) {
@@ -160,7 +162,7 @@ user.orgRepos(orgname, function (er, repos) {
                         })
                     }
 
-                }, function (er, status) {
+                }, ASYNC_LIMIT, function (er, status) {
                     if (er) {
                         console.error(er);
                         process.exit(1);
@@ -197,7 +199,7 @@ user.orgRepos(orgname, function (er, repos) {
                 console.log("& Posting Issues");
             }
 
-            async.map(repos, calculateScore, function (er, repos) {
+            async.mapLimit(repos, ASYNC_LIMIT, calculateScore, function (er, repos) {
                 if (er) {
                     console.error(er);
                     process.exit(1);
@@ -205,14 +207,14 @@ user.orgRepos(orgname, function (er, repos) {
 
                 if (program.createIssues) {
                     async.each(repos, function (repo, callback) {
-                        async.parallel([function (callback) {
+                        async.parallelLimit([function (callback) {
                                 if (!repo.readme) {
-                                    alternativeGithub.search.issues({q: "Missing Good Readme"}, function (er, result) {
+                                    alternativeGithub.search.issues({q: "Missing Good Readme repo:" + repo.full_name}, function (er, result) {
                                         if (er) {
                                             console.error(er);
                                         }
 
-                                        if (result && result.total_count > 0) {
+                                        if (result && result.total_count == 0) {
                                             alternativeGithub.issues.create({
                                                 title: "Missing Good Readme",
                                                 body: "A project is useless without a good readme. See here for a guide: https://gist.github.com/PurpleBooth/6f1ba788bf70fb501439, and here for an example https://gist.github.com/PurpleBooth/109311bb0361f32d87a2",
@@ -226,17 +228,20 @@ user.orgRepos(orgname, function (er, repos) {
                                                 callback(er, result);
                                             })
                                         }
+                                        else {
+                                            callback(er, result)
+                                        }
                                     })
                                 }
                             },
                                 function (callback) {
                                     if (!repo.license) {
-                                        alternativeGithub.search.issues({q: "Missing a License"}, function (er, result) {
+                                        alternativeGithub.search.issues({q: "Missing a License repo:" + repo.full_name}, function (er, result) {
                                             if (er) {
                                                 console.error(er);
                                             }
 
-                                            if (result && result.total_count > 0) {
+                                            if (result && result.total_count == 0) {
                                                 alternativeGithub.issues.create({
                                                     title: "Missing a License",
                                                     body: "Without a license a user cannot use a project as they might be sued! See here for a guide: https://gist.github.com/PurpleBooth/6f1ba788bf70fb501439, and here for an example https://github.com/nevir/readable-licenses/tree/master/markdown",
@@ -250,17 +255,20 @@ user.orgRepos(orgname, function (er, repos) {
                                                     callback(er, result);
                                                 })
                                             }
+                                            else {
+                                                callback(er, result)
+                                            }
                                         })
                                     }
                                 },
                                 function (callback) {
                                     if (!repo.contributing) {
-                                        alternativeGithub.search.issues({q: "Missing a CONTRIBUTING file"}, function (er, result) {
+                                        alternativeGithub.search.issues({q: "Missing a CONTRIBUTING file repo:" + repo.full_name}, function (er, result) {
                                             if (er) {
                                                 console.error(er);
                                             }
 
-                                            if (result && result.total_count > 0) {
+                                            if (result && result.total_count == 0) {
                                                 alternativeGithub.issues.create({
                                                     title: "Missing a CONTRIBUTING file",
                                                     body: "A contributing file is a place for a user to work out how to contribute to a project, and what coding standards, and things they need to do before submitting code. It is also the place you should include a code of conduct, to make sure people know they can be expected to be treated fairly by the project. https://gist.github.com/PurpleBooth/6f1ba788bf70fb501439",
@@ -274,17 +282,20 @@ user.orgRepos(orgname, function (er, repos) {
                                                     callback(er, result);
                                                 })
                                             }
+                                            else {
+                                                callback(er, result)
+                                            }
                                         })
                                     }
                                 },
                                 function (callback) {
                                     if (!repo.travis) {
-                                        alternativeGithub.search.issues({q: "Missing a travis ci config"}, function (er, result) {
+                                        alternativeGithub.search.issues({q: "Missing a travis ci config repo:" + repo.full_name}, function (er, result) {
                                             if (er) {
                                                 console.error(er);
                                             }
 
-                                            if (result && result.total_count > 0) {
+                                            if (result && result.total_count == 0) {
                                                 alternativeGithub.issues.create({
                                                     title: "Missing a travis ci config",
                                                     body: "Make life easier for people submitting code to your repository. Make sure that you double check that their code works the best you can (even if that's just running a build of the package) in travis. This way potential contributors can fix bugs before you even need to look at their request. https://gist.github.com/PurpleBooth/6f1ba788bf70fb501439",
@@ -298,10 +309,13 @@ user.orgRepos(orgname, function (er, repos) {
                                                     }
                                                 })
                                             }
+                                            else {
+                                                callback(er, result)
+                                            }
                                         })
                                     }
                                 },
-                            ], function (result) {
+                            ], ASYNC_LIMIT, function (result) {
                                 callback();
                             }
                         );
@@ -341,7 +355,7 @@ user.orgRepos(orgname, function (er, repos) {
                     callback(null, repo);
                 };
 
-                async.map(repos, prettyTicks, function (er, repos) {
+                async.mapLimit(repos, ASYNC_LIMIT, prettyTicks, function (er, repos) {
                     if (er) {
                         console.error(er);
                         process.exit(1);
