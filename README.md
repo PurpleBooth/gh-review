@@ -22,6 +22,8 @@ $ docker run -i quay.io/purplebooth/gh-review:$VERSION
     -u, --username <username>  GitHub Username (Optional)
     -p, --password <password>  GitHub Password (Optional)
     -o, --oauth <oauth>        OAuth2 token to authenticate with (Optional)
+    -i, --createIssues         Create issues for the problems identified, requires authentication (Optional)
+    -s, --publicOnly           Public only, even if authenticated (Optional)
 ```
 
 You can also checkout or download a release and run it manually. Please see the [installing](#installing) section for 
@@ -41,6 +43,8 @@ $ bin/gh-review
     -u, --username <username>  GitHub Username (Optional)
     -p, --password <password>  GitHub Password (Optional)
     -o, --oauth <oauth>        OAuth2 token to authenticate with (Optional)
+    -i, --createIssues         Create issues for the problems identified, requires authentication (Optional)
+    -s, --publicOnly           Public only, even if authenticated (Optional)
 ```
 
 You can include private repos, or bypass rate limiting by providing a username and password or a oauth token.
