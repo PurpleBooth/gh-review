@@ -18,7 +18,7 @@
     "github-api": "^0.10.6",
     "glob": "^5.0.15",
     "line-count": "^0.1.0",
-    "nodegit": "^0.5.0",
+    "nodegit": "^0.26.3",
     "underscore": "^1.8.3"
   },
   "repository": {
